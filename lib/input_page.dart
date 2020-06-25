@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-const double bottomContainerHeight = 70.0;
+const double bottomContainerHeight = 60.0;
 const Color activeCardColor = Color(0xFF1D1E33);
 const Color bottomContainerColor = Color(0xFFEB1555);
 
@@ -21,15 +22,23 @@ class _InputPageState extends State<InputPage> {
         children: <Widget>[
           Expanded(
             child: Row(
-              children: const <Widget>[
+              children: <Widget>[
                 Expanded(
                   child: ReusableCard(
-                    color: activeCardColor,
+                    cardColor: activeCardColor,
+                    cardChild: IconContent(
+                      icon: FontAwesomeIcons.mars,
+                      label: 'MALE',
+                    ),
                   ),
                 ),
                 Expanded(
                   child: ReusableCard(
-                    color: activeCardColor,
+                    cardColor: activeCardColor,
+                    cardChild: IconContent(
+                      icon: FontAwesomeIcons.venus,
+                      label: 'FEMALE',
+                    ),
                   ),
                 ),
               ],
@@ -37,7 +46,7 @@ class _InputPageState extends State<InputPage> {
           ),
           const Expanded(
             child: ReusableCard(
-              color: activeCardColor,
+              cardColor: activeCardColor,
             ),
           ),
           Expanded(
@@ -45,12 +54,12 @@ class _InputPageState extends State<InputPage> {
               children: const <Widget>[
                 Expanded(
                   child: ReusableCard(
-                    color: activeCardColor,
+                    cardColor: activeCardColor,
                   ),
                 ),
                 Expanded(
                   child: ReusableCard(
-                    color: activeCardColor,
+                    cardColor: activeCardColor,
                   ),
                 ),
               ],
@@ -68,10 +77,39 @@ class _InputPageState extends State<InputPage> {
   }
 }
 
-class ReusableCard extends StatelessWidget {
-  final Color color;
+class IconContent extends StatelessWidget {
+  final IconData icon;
+  final String label;
 
-  const ReusableCard({@required this.color});
+  const IconContent({@required this.icon, @required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Icon(
+          icon,
+          size: 80.0,
+        ),
+        const SizedBox(height: 10.0),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 18.0,
+            color: Color(0xFF8D8E98),
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class ReusableCard extends StatelessWidget {
+  final Color cardColor;
+  final Widget cardChild;
+
+  const ReusableCard({@required this.cardColor, this.cardChild});
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +117,9 @@ class ReusableCard extends StatelessWidget {
       margin: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: color,
+        color: cardColor,
       ),
+      child: cardChild,
     );
   }
 }
