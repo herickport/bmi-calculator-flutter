@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+// Theme
+const Color kPrimaryColor = Color(0xFF0A0E21);
+
 // Reusable Card Constants
 const Color kActiveCardColor = Color(0xFF1D1E33);
 const Color kInactiveCardColor = Color(0xFF111328);
@@ -45,5 +48,5 @@ const TextStyle kBMITextStyle = TextStyle(
 );
 
 const TextStyle kBodyTextStyle = TextStyle(
-  fontSize: 20.0,
+  fontSize: 22.0,
 );

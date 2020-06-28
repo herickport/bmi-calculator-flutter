@@ -1,3 +1,4 @@
+import 'package:bmi_calculator/calculator_brain.dart';
 import 'package:bmi_calculator/constants.dart';
 import 'package:bmi_calculator/pages/result_page.dart';
 import 'package:bmi_calculator/widgets/bottom_button.dart';
@@ -18,6 +19,8 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
   Gender selectedGender;
   int height = 180;
   int weight = 60;
@@ -26,6 +29,7 @@ class _InputPageState extends State<InputPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: const Text('BMI CALCULATOR'),
         centerTitle: true,
@@ -214,9 +218,32 @@ class _InputPageState extends State<InputPage> {
           BottomButton(
             label: 'CALCULATE',
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => ResultPage()),
-              );
+              if (selectedGender != null) {
+                final CalculatorBrain calc = CalculatorBrain(
+                  height: height,
+                  weight: weight,
+                );
+
+                final Map<String, String> bmiResult = calc.calculateBMI();
+
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => ResultPage(
+                      bmiResult: bmiResult,
+                    ),
+                  ),
+                );
+              } else {
+                scaffoldKey.currentState.showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'Select a gender to calculate.',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    backgroundColor: kPrimaryColor,
+                  ),
+                );
+              }
             },
           )
         ],
